@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var text = ""
-    @State var cities = ["Бабруйск", "Балі", "Барысаў", "Беразіно","Бялынічы", "Горкі", "Парыж", "Коноха"]
+@ObservedObject private var viewModel = ViewModel()
     var body: some View {
         NavigationStack {
             List{
@@ -31,14 +30,14 @@ struct ContentView: View {
                 }
             }
         }
-        .searchable(text: $text)
+        .searchable(text: $viewModel.text)
     }
     
     var searchResult:[String] {
-        if text.isEmpty {
-            return cities
+        if viewModel.text.isEmpty {
+            return viewModel.cities
         } else {
-            return cities.filter {$0.contains(text)}
+            return viewModel.cities.filter {$0.contains(viewModel.text)}
         }
     }
 }
